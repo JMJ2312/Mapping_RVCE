@@ -32,7 +32,11 @@ for latt,long,ty,name,state in zip(lat, lon, type, names, status):
     if ty==" ":
         ty="Click Me!"
     fg.add_child(folium.Marker(location=(latt, long), popup=name, icon=folium.Icon(color=colour), tooltip=ty))
-    
+    #fg.add_child(folium.CircleMarker(location=(latt, long), popup=name, radius =5, fill_color=colour, tooltip=ty, fill_opacity=0.8))
+
+fg.add_child(folium.GeoJson(data=open('Applications\App1\world.json', 'r', encoding='utf-8-sig').read(),
+                             style_function=lambda x: {'fillColor':'green' if x['properties']['POP2005'] < 50000000 
+                                                       else 'orange' if x['properties']['POP2005'] < 100000000 else 'red'}))
 
 map.add_child(fg)
 map.save("Applications\App1\Map1.html")
